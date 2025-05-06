@@ -1,0 +1,42 @@
+module tb_vigenere_encryptor;
+
+    reg [7:0] message[0:11];  // V, A, M, S, I, K, R, I, S, H, N, A
+    reg [7:0] keyword[0:11];  // N, A, G, A, R, A, V, I, N, D, R, A
+    wire [7:0] encrypted_char;
+    integer i;
+
+    reg [7:0] msg_char;
+    reg [7:0] key_char;
+
+    vigenere_encryptor uut (
+        .message_char(msg_char),
+        .key_char(key_char),
+        .encrypted_char(encrypted_char)
+    );
+
+    initial begin
+        // Initialize message and keyword
+        message[0] = "V"; keyword[0] = "N";
+        message[1] = "A"; keyword[1] = "A";
+        message[2] = "M"; keyword[2] = "G";
+        message[3] = "S"; keyword[3] = "A";
+        message[4] = "I"; keyword[4] = "R";
+        message[5] = "K"; keyword[5] = "A";
+        message[6] = "R"; keyword[6] = "V";
+        message[7] = "I"; keyword[7] = "I";
+        message[8] = "S"; keyword[8] = "N";
+        message[9] = "H"; keyword[9] = "D";
+        message[10] = "N"; keyword[10] = "R";
+        message[11] = "A"; keyword[11] = "A";
+
+        $display("Message  Key  Encrypted");
+        for (i = 0; i < 13; i = i + 1) begin
+            msg_char = message[i];
+            key_char = keyword[i];
+            #1; // Wait for encryption
+            $display("   %c      %c      %c", msg_char, key_char, encrypted_char);
+        end
+        $finish;
+    end
+
+endmodule
